@@ -1,0 +1,234 @@
+/* ============================================================
+   熊猫海上 v2 —— 手绘风设计系统（CSS 原样平移自 v1）
+   米纸底色 / 墨线抖动边框 / 瓷砖导航 / 楷体手写感
+   ============================================================ */
+
+:root {
+  --paper: #efe9db;
+  --paper-2: #f7f3e8;
+  --ink: #22201b;
+  --ink-2: #6d675c;
+  --line: #2b2823;
+  --accent: #b3542e;
+  --paper-line: rgba(43, 40, 35, 0.25);
+  --wobble: 255px 15px 225px 15px / 15px 225px 15px 255px;
+  --wobble-sm: 155px 10px 135px 10px / 10px 135px 10px 155px;
+  --wobble-alt: 15px 225px 15px 255px / 255px 15px 225px 15px;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  color: var(--ink);
+  background-color: var(--paper);
+  background-image: radial-gradient(rgba(43, 40, 35, 0.055) 1px, transparent 1px);
+  background-size: 22px 22px;
+  font-family: "Kaiti SC", "STKaiti", "KaiTi", "DFKai-SB", "Segoe Print", "Comic Sans MS", serif;
+  line-height: 1.9;
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: inherit; }
+
+/* ---------- 头部 ---------- */
+.site-header { border-bottom: 2.5px solid var(--line); background: var(--paper); }
+.masthead {
+  max-width: 880px; margin: 0 auto; padding: 22px 20px 14px;
+  display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap;
+}
+.logo-link { display: flex; align-items: center; gap: 14px; text-decoration: none; }
+.logo-mascot {
+  width: 58px; height: 58px; object-fit: cover;
+  border: 2.5px solid var(--line);
+  border-radius: 60px 10px 55px 10px / 10px 55px 10px 60px;
+  background: #fff; padding: 3px; transform: rotate(-3deg);
+  transition: transform .25s ease;
+}
+.logo-link:hover .logo-mascot { transform: rotate(2deg) scale(1.05); }
+.logo-text { font-size: 30px; font-weight: 700; letter-spacing: 6px; display: flex; flex-direction: column; line-height: 1.15; }
+.logo-en { font-family: "Courier New", monospace; font-size: 11px; font-weight: 400; letter-spacing: 5px; color: var(--ink-2); }
+
+.ink-nav { display: flex; align-items: center; gap: 4px; flex-wrap: wrap; font-size: 16px; }
+.ink-nav a {
+  text-decoration: none; padding: 4px 10px;
+  border: 2px solid transparent; border-radius: var(--wobble-sm);
+  transition: all .15s ease;
+}
+.ink-nav a:hover { border-color: var(--line); background: var(--paper-2); transform: rotate(-1deg); }
+.ink-nav a.active { border-color: var(--line); background: #fff; }
+.nav-username { color: var(--accent); font-weight: 700; margin: 0 4px; }
+
+.ticker {
+  overflow: hidden; border-top: 1.5px dashed var(--paper-line);
+  padding: 5px 0; font-size: 13px; color: var(--ink-2);
+  letter-spacing: 3px; white-space: nowrap;
+}
+.ticker span { display: inline-block; animation: drift 26s linear infinite; }
+@keyframes drift { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+/* ---------- 主区 ---------- */
+.page { max-width: 880px; margin: 0 auto; padding: 34px 20px 60px; min-height: 60vh; }
+
+.ink-title { display: flex; align-items: baseline; gap: 14px; margin: 6px 0 26px; }
+.ink-title h1, .ink-title h2 {
+  margin: 0; font-size: 30px; letter-spacing: 4px;
+  border-left: 4px solid var(--line); padding-left: 14px;
+}
+.stamp {
+  font-family: "Courier New", monospace; font-size: 11px; letter-spacing: 4px;
+  color: var(--accent); border: 1.5px solid var(--accent);
+  border-radius: 6px 2px 7px 2px; padding: 2px 8px; transform: rotate(-2deg);
+}
+
+/* ---------- 瓷砖 ---------- */
+.tile-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 18px; margin-bottom: 40px; }
+.tile {
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px;
+  min-height: 120px; padding: 16px 10px; text-align: center; text-decoration: none;
+  background: var(--paper-2); border: 2.5px solid var(--line); border-radius: var(--wobble);
+  transition: transform .2s ease, background .2s ease, box-shadow .2s ease;
+}
+.tile:nth-child(2n) { border-radius: var(--wobble-alt); transform: rotate(.6deg); }
+.tile:nth-child(3n) { transform: rotate(-.8deg); }
+.tile:nth-child(2n):hover { transform: rotate(-.6deg) translateY(-4px); }
+.tile:nth-child(3n):hover { transform: rotate(.8deg) translateY(-4px); }
+.tile:hover { background: #fff; box-shadow: 3px 4px 0 rgba(43, 40, 35, 0.9); }
+.tile-icon { width: 44px; height: 44px; color: var(--ink); }
+.tile-name { font-size: 17px; letter-spacing: 3px; font-weight: 700; }
+.tile-note { font-size: 12px; color: var(--ink-2); letter-spacing: 1px; }
+.tile-accent { background: var(--accent); color: #fff; }
+.tile-accent .tile-note { color: rgba(255, 255, 255, .85); }
+.tile-panda img {
+  width: 64px; height: 64px; object-fit: cover;
+  border-radius: 50%; border: 2.5px solid var(--line); background: #fff; padding: 3px;
+}
+
+/* ---------- 日志条目 ---------- */
+.log-list { display: flex; flex-direction: column; gap: 18px; }
+.log-item {
+  background: var(--paper-2); border: 2.5px solid var(--line); border-radius: var(--wobble-sm);
+  padding: 18px 22px; text-decoration: none; display: block;
+  transition: transform .18s ease, box-shadow .18s ease, background .18s ease;
+}
+.log-item:nth-child(2n) { border-radius: var(--wobble-alt); }
+.log-item:hover { background: #fff; transform: translate(-2px, -2px); box-shadow: 3px 4px 0 rgba(43, 40, 35, 0.85); }
+.log-item h3 { margin: 0 0 6px; font-size: 20px; letter-spacing: 2px; }
+.log-key { margin: 0 0 8px; color: var(--ink-2); font-size: 14.5px; }
+.log-meta {
+  font-size: 12.5px; color: var(--ink-2); display: flex; gap: 10px; flex-wrap: wrap;
+  align-items: center; font-family: "Courier New", monospace;
+}
+.badge {
+  font-size: 11.5px; border: 1.5px solid var(--accent); color: var(--accent);
+  border-radius: 6px 2px 7px 2px; padding: 1px 7px; transform: rotate(-1.5deg);
+  font-family: inherit;
+}
+
+/* ---------- 文章 ---------- */
+.article {
+  background: var(--paper-2); border: 2.5px solid var(--line); border-radius: var(--wobble);
+  padding: 30px 34px; margin-bottom: 28px;
+}
+.article h1 { margin: 0 0 10px; font-size: 28px; letter-spacing: 3px; border-left: 4px solid var(--line); padding-left: 14px; }
+.article .content { margin-top: 22px; font-size: 16.5px; }
+.article .content p { margin: 0 0 1.5em; }
+.post-meta { font-size: 12.5px; color: var(--ink-2); display: flex; gap: 10px; align-items: center; flex-wrap: wrap; font-family: "Courier New", monospace; }
+.crumbs { font-family: "Courier New", monospace; font-size: 12.5px; letter-spacing: 1px; color: var(--ink-2); margin-bottom: 16px; }
+.crumbs a { color: var(--ink-2); }
+.crumbs a:hover { color: var(--accent); }
+
+/* ---------- 评论 ---------- */
+.comments h3 { font-size: 18px; letter-spacing: 3px; border-left: 4px solid var(--line); padding-left: 12px; }
+.comment-item {
+  background: #fff; border: 2px solid var(--line); border-radius: var(--wobble-sm);
+  padding: 12px 18px; margin-bottom: 12px;
+}
+.comment-item:nth-child(2n) { border-radius: var(--wobble-alt); }
+.comment-meta { font-size: 12px; color: var(--ink-2); font-family: "Courier New", monospace; display: flex; gap: 10px; margin-bottom: 6px; }
+.comment-meta .del { color: var(--accent); cursor: pointer; text-decoration: underline; }
+.comment-content { font-size: 15px; }
+
+/* ---------- 表单 ---------- */
+.form-card {
+  max-width: 430px; margin: 0 auto; background: var(--paper-2);
+  border: 2.5px solid var(--line); border-radius: var(--wobble); padding: 28px 30px;
+}
+.form-card.wide { max-width: 640px; }
+.form-card h2 { margin: 0 0 18px; font-size: 22px; letter-spacing: 4px; border-left: 4px solid var(--line); padding-left: 12px; }
+.login-mascot {
+  display: block; width: 84px; height: 84px; object-fit: cover; margin: 0 auto 14px;
+  border: 2.5px solid var(--line); border-radius: 50%; background: #fff; padding: 3px; transform: rotate(-3deg);
+}
+.field { margin-bottom: 16px; }
+.field label { display: block; font-size: 13.5px; letter-spacing: 2px; margin-bottom: 6px; color: var(--ink-2); }
+.field input, .field textarea {
+  width: 100%; padding: 9px 12px; font-family: inherit; font-size: 15px; color: var(--ink);
+  background: #fff; border: 2px solid var(--line); border-radius: var(--wobble-sm);
+  outline: none; transition: box-shadow .15s ease;
+}
+.field input:focus, .field textarea:focus { box-shadow: 2px 3px 0 rgba(43, 40, 35, 0.8); }
+.field textarea { min-height: 150px; resize: vertical; }
+.field .error { color: var(--accent); font-size: 12.5px; margin: 4px 0 0; }
+.btn {
+  display: inline-block; width: 100%; padding: 10px 18px; font-family: inherit; font-size: 15.5px;
+  letter-spacing: 3px; color: var(--ink); background: var(--paper-2);
+  border: 2.5px solid var(--line); border-radius: var(--wobble-sm); cursor: pointer;
+  text-decoration: none; text-align: center; transition: all .15s ease;
+}
+.btn:hover { background: #fff; transform: translate(-2px, -2px); box-shadow: 3px 4px 0 rgba(43, 40, 35, 0.85); }
+.btn-primary { background: var(--accent); color: #fff; }
+.btn-primary:hover { background: #9c4523; }
+.btn-ghost { background: transparent; }
+.btn-sm { width: auto; padding: 4px 12px; font-size: 13px; }
+.form-actions { margin-top: 20px; }
+.form-msg { font-size: 13px; min-height: 18px; margin: 10px 0 0; }
+.form-msg.ok { color: #3d7a4f; }
+.form-msg.err { color: var(--accent); }
+.divider { text-align: center; color: var(--ink-2); font-size: 12.5px; letter-spacing: 3px; margin: 18px 0; }
+.login-hint { font-size: 13px; color: var(--ink-2); }
+.login-hint a { color: var(--accent); }
+
+/* ---------- 关于 ---------- */
+.about-card {
+  background: var(--paper-2); border: 2.5px solid var(--line); border-radius: var(--wobble);
+  padding: 30px 34px;
+}
+.about-card p { margin: 0 0 1.4em; font-size: 16px; }
+.about-flex { display: flex; gap: 26px; align-items: flex-start; flex-wrap: wrap; }
+.about-flex img {
+  width: 130px; height: 130px; object-fit: cover;
+  border: 2.5px solid var(--line);
+  border-radius: 65px 12px 60px 12px / 12px 60px 12px 65px;
+  background: #fff; padding: 4px; transform: rotate(-2.5deg);
+}
+
+/* ---------- 通用 ---------- */
+.loading { color: var(--ink-2); letter-spacing: 3px; text-align: center; padding: 40px 0; }
+.empty {
+  text-align: center; padding: 50px 24px; color: var(--ink-2);
+  border: 2px dashed var(--paper-line); border-radius: var(--wobble-sm); letter-spacing: 2px;
+}
+.empty-mascot { text-align: center; padding: 40px 20px; color: var(--ink-2); }
+.empty-mascot img {
+  width: 110px; height: 110px; object-fit: cover; border-radius: 50%;
+  border: 2.5px solid var(--line); background: #fff; padding: 3px; margin-bottom: 14px;
+}
+
+/* ---------- 页脚 ---------- */
+.site-footer { border-top: 2.5px solid var(--line); background: var(--paper); }
+.footer-inner {
+  max-width: 880px; margin: 0 auto; padding: 22px 20px 30px;
+  text-align: center; color: var(--ink-2); font-size: 13.5px; letter-spacing: 2px;
+}
+.footer-inner p { margin: 6px 0; }
+.footer-inner a { color: var(--accent); }
+.footer-small { font-size: 12px; font-family: "Courier New", monospace; letter-spacing: 1px; }
+.footer-doodle { color: var(--ink-2); display: inline-block; }
+
+@media (max-width: 560px) {
+  .masthead { justify-content: center; }
+  .logo-text { font-size: 24px; }
+  .article, .about-card { padding: 22px 18px; }
+  .tile-grid { grid-template-columns: repeat(2, 1fr); }
+}
